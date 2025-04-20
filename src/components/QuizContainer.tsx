@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Quiz, QuizState, QuizResult } from '../types/quiz';
+import { Quiz, QuizState, QuizResult as QuizResultType } from '../types/quiz';
 import QuizHeader from './QuizHeader';
 import QuizQuestion from './QuizQuestion';
 import QuizResult from './QuizResult';
@@ -26,7 +26,7 @@ const QuizContainer: React.FC<QuizContainerProps> = ({ quiz, onFinish, onRestart
   });
   
   const [isRevealing, setIsRevealing] = useState(false);
-  const [result, setResult] = useState<QuizResult | null>(null);
+  const [result, setResult] = useState<QuizResultType | null>(null);
   const { toast } = useToast();
 
   const currentQuestion = quiz.questions[quizState.currentQuestionIndex];

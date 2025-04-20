@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { QuizResult } from '../types/quiz';
+import type { QuizResult as QuizResultType } from '../types/quiz';
 import { Button } from '@/components/ui/button';
 import { formatTime } from '../utils/quizUtils';
 import { CheckCircle } from 'lucide-react';
@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Progress } from '@/components/ui/progress';
 
 interface QuizResultProps {
-  result: QuizResult;
+  result: QuizResultType;
   onRestart: () => void;
   onStartNewQuiz: () => void;
 }
