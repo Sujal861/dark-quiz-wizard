@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Quiz } from '../types/quiz';
 import { quizzes } from '../data/quizzes';
@@ -6,12 +5,15 @@ import Navbar from '../components/Navbar';
 import QuizSelector from '../components/QuizSelector';
 import QuizContainer from '../components/QuizContainer';
 import QuizIntro from '../components/QuizIntro';
+import QuizGenerator from '../components/QuizGenerator';
 import ParticleBackground from '../components/ParticleBackground';
+import { Button } from '@/components/ui/button';
 
 const Index = () => {
   const [selectedQuiz, setSelectedQuiz] = useState<Quiz | null>(null);
   const [isStarted, setIsStarted] = useState(false);
-  const [appState, setAppState] = useState<'select' | 'intro' | 'quiz'>('select');
+  const [appState, setAppState] = useState<'select' | 'intro' | 'quiz' | 'generate'>('select');
+  const [availableQuizzes, setAvailableQuizzes] = useState<Quiz[]>(quizzes);
 
   const handleSelectQuiz = (quiz: Quiz) => {
     setSelectedQuiz(quiz);
@@ -30,9 +32,22 @@ const Index = () => {
   };
 
   const handleRestartQuiz = () => {
-    // Just restart the same quiz
     setIsStarted(true);
     setAppState('quiz');
+  };
+  
+  const handleShowGenerator = () => {
+    setAppState('generate');
+  };
+  
+  const handleQuizGenerated = (quiz: Quiz) => {
+    setAvailableQuizzes(prev => [quiz, ...prev]);
+    setSelectedQuiz(quiz);
+    setAppState('intro');
+  };
+  
+  const handleBackToSelector = () => {
+    setAppState('select');
   };
 
   return (
@@ -42,7 +57,26 @@ const Index = () => {
       
       <main className="flex-1 container mx-auto py-6 md:py-10">
         {appState === 'select' && (
-          <QuizSelector quizzes={quizzes} onSelectQuiz={handleSelectQuiz} />
+          <QuizSelector 
+            quizzes={availableQuizzes} 
+            onSelectQuiz={handleSelectQuiz} 
+            onShowGenerator={handleShowGenerator}
+          />
+        )}
+        
+        {appState === 'generate' && (
+          <div className="space-y-6">
+            <div className="flex justify-center">
+              <Button 
+                onClick={handleBackToSelector} 
+                variant="outline" 
+                className="mb-4"
+              >
+                Back to Quiz Selection
+              </Button>
+            </div>
+            <QuizGenerator onQuizGenerated={handleQuizGenerated} />
+          </div>
         )}
         
         {appState === 'intro' && selectedQuiz && (
