@@ -35,7 +35,7 @@ const QuizSelector: React.FC<QuizSelectorProps> = ({
             Generate AI Quiz
           </Button>
           <p className="text-center text-sm text-muted-foreground mt-2">
-            Create a fresh, AI-generated quiz on any topic
+            Create a fresh, AI-generated quiz on any topic with accurate questions
           </p>
         </div>
         
